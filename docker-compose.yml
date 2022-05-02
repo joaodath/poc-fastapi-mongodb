@@ -3,6 +3,7 @@ version: '3'
 services:
     api:
       image: fastapi-milenio
+      build: .
       restart: always
       container_name: api
       volumes:
