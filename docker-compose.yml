@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+    api:
+      image: fastapi-milenio
+      restart: always
+      container_name: api
+      volumes:
+      - api-data:/data/api
+      ports:
+      - 3000:80
+
     mongodb1:
         image: mongo:5
         restart: always
@@ -46,3 +55,4 @@ volumes:
     mongodata2:
     mongodata3:
     mongosetupdata:
+    api-data:
