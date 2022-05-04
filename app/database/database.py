@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv, find_dotenv
+from bson import ObjectId
 
 # needed to connect with mongodb
 import motor.motor_asyncio
@@ -51,6 +52,10 @@ async def find_all_by_target(target):
     result = await engine.find({"target": target})
     return result
 
+async def find_one_by_id(model, id):
+    result = await engine.find_one(model, model.id == ObjectId(id))
+    return result
+
 
 async def find_one_by_source(source):
     result = await engine.find_one({"source": source})
@@ -63,5 +68,6 @@ async def find_one_by_target(target):
 
 #exports the methods
 
-if __name__ == "__main__":
-    find_all()
+# if __name__ == "__main__":
+#     find_all()
+#     find_one_by_id()
