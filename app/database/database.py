@@ -45,5 +45,9 @@ async def find_all(model):
 
 
 async def find_one_by_id(model, id):
-    result = await engine.find_one(model, model.id == ObjectId(id))
-    return result
+    try:
+        result = await engine.find_one(model, model.id == ObjectId(id))
+        return result
+    except Exception as e:
+        print(e)
+        return None
