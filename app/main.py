@@ -1,25 +1,35 @@
+from .database.models import GraphList
+from .database.database import find_all, find_one_by_id
 import os
 from typing import List, Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv(raise_error_if_not_found=True))
 
-from .database.database import find_all
-from .database.models import Graph, GraphList
 
 app = FastAPI()
 
-@app.get("/", description="A route to get all graphs stored", response_model=List[GraphList])
-async def find_all():
+
+@app.get("/allgraphs", description="A route to get all graphs stored", response_model=List[GraphList])
+async def get_all():
     graphs = await find_all(GraphList)
     return graphs
-# add basic structure to api
 
-@app.get("/graph/{graph_id}")  # recover graph
-def get_graph(graph_id: int):
 
-    return {"graph_id": graph_id}
+@app.get("/graph/{graph_id}", response_model=GraphList)  # recover graph
+async def get_graph(graph_id: str):
+    graphs = await find_one_by_id(GraphList, graph_id)
+    if graphs is None:
+        raise HTTPException(
+            status_code=404, detail=f"Graph {graph_id} not found")
+    # print(f'''these are the graphs:
+    #       {graphs}
+    #       type: {type(graphs)}
+    #       id: {graphs.id}
+    #       data: {graphs.data}
+    #       data type: {type(graphs.data)}''')
+    return graphs
 
 # todo: request clarification about the last two endpoints
