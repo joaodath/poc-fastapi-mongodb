@@ -1,59 +1,82 @@
 version: '3'
 
 services:
-    api:
-      image: fastapi-milenio
-      build: .
-      restart: always
-      container_name: api
-      volumes:
+  api:
+    image: fastapi-milenio
+    build: .
+    restart: always
+    container_name: api
+    volumes:
       - api-data:/data/api
-      ports:
+    ports:
       - 8080:80
 
-    mongodb1:
-        image: mongo:5
-        restart: always
-        container_name: mongodb1
-        volumes:
-        - mongodata1:/data/db
-        expose:
-        - "27017"
-        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
+  mongodb1:
+    image: mongo:5
+    restart: always
+    container_name: mongodb1
+    volumes:
+      - mongodata1:/data/db
+    expose:
+      - "27017"
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rsmongo",
+        "--bind_ip_all",
+        "--wiredTigerCacheSizeGB",
+        "1"
+      ]
 
-    mongodb2:
-        image: mongo:5
-        restart: always
-        container_name: mongodb2
-        volumes:
-        - mongodata2:/data/db
-        expose:
-        - "27017"
-        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
-      
-    mongodb3:
-        image: mongo:5
-        restart: always
-        container_name: mongodb3
-        volumes:
-        - mongodata3:/data/db
-        expose:
-        - "27017"
-        entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1" ]
-    
-    mongosetup:
-        image: "mongo-setup"
-        build: "./mongo-setup"
-        container_name: "mongosetup"
-        depends_on:
-            - mongodb1
-        volumes:
-            - mongosetupdata:/data/
-    
+  mongodb2:
+    image: mongo:5
+    restart: always
+    container_name: mongodb2
+    volumes:
+      - mongodata2:/data/db
+    expose:
+      - "27017"
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rsmongo",
+        "--bind_ip_all",
+        "--wiredTigerCacheSizeGB",
+        "1"
+      ]
+
+  mongodb3:
+    image: mongo:5
+    restart: always
+    container_name: mongodb3
+    volumes:
+      - mongodata3:/data/db
+    expose:
+      - "27017"
+    entrypoint:
+      [
+        "/usr/bin/mongod",
+        "--replSet",
+        "rsmongo",
+        "--bind_ip_all",
+        "--wiredTigerCacheSizeGB",
+        "1"
+      ]
+
+  mongosetup:
+    image: "mongo-setup"
+    build: "./mongo-setup"
+    container_name: "mongosetup"
+    depends_on:
+      - mongodb1
+    volumes:
+      - mongosetupdata:/data/
 
 volumes:
-    mongodata1:
-    mongodata2:
-    mongodata3:
-    mongosetupdata:
-    api-data:
+  mongodata1:
+  mongodata2:
+  mongodata3:
+  mongosetupdata:
+  api-data:
