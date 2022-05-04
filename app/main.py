@@ -1,9 +1,7 @@
 from .database.models import GraphList
 from .database.database import find_all, find_one_by_id
-import os
-from typing import List, Optional
+from typing import List
 from fastapi import FastAPI, HTTPException
-
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv(raise_error_if_not_found=True))
@@ -24,12 +22,6 @@ async def get_graph(graph_id: str):
     if graphs is None:
         raise HTTPException(
             status_code=404, detail=f"Graph {graph_id} not found")
-    # print(f'''these are the graphs:
-    #       {graphs}
-    #       type: {type(graphs)}
-    #       id: {graphs.id}
-    #       data: {graphs.data}
-    #       data type: {type(graphs.data)}''')
     return graphs
 
 # todo: request clarification about the last two endpoints

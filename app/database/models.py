@@ -1,7 +1,5 @@
-import collections
 from typing import Optional, List
 from odmantic import Field, Model, EmbeddedModel
-from bson import ObjectId
 
 
 class BaseGraph(EmbeddedModel):

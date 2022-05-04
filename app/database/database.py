@@ -10,14 +10,13 @@ from odmantic import AIOEngine
 
 load_dotenv(find_dotenv())
 
+#creating engine
 motor_client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODBURI"])
 engine = AIOEngine(motor_client=motor_client, database=os.environ["MONGODB"])
 
 # database methods
 
 # create
-
-
 async def insert_one(data):
     """
     Inserts a new document into the database.
@@ -36,7 +35,7 @@ async def insert_one(data):
 
 async def find_all(model):
     try:
-        result = await engine.find(model= model)
+        result = await engine.find(model=model)
         return result
     except Exception as e:
         print(e)
@@ -52,6 +51,7 @@ async def find_all_by_target(target):
     result = await engine.find({"target": target})
     return result
 
+
 async def find_one_by_id(model, id):
     result = await engine.find_one(model, model.id == ObjectId(id))
     return result
@@ -65,9 +65,3 @@ async def find_one_by_source(source):
 async def find_one_by_target(target):
     result = await engine.find_one({"target": target})
     return result
-
-#exports the methods
-
-# if __name__ == "__main__":
-#     find_all()
-#     find_one_by_id()
