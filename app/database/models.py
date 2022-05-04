@@ -4,7 +4,7 @@ from odmantic import Field, Model, EmbeddedModel
 from bson import ObjectId
 
 
-class Graph(EmbeddedModel):
+class BaseGraph(EmbeddedModel):
     source: str = Field(...)
     target: str = Field(...)
     distance: int = Field(...)
@@ -15,13 +15,14 @@ class UpdateGraph(Model):
     target: Optional[str]
     distance: Optional[int]
 
+
 class GraphList(Model):
-    data: List[Graph] = Field(...)
+    data: List[BaseGraph] = Field(...)
 
     class Config:
-      collection = "graph"
+        collection = "graph"
+
 
 if __name__ == "__main__":
-    Graph
     GraphList
     UpdateGraph
