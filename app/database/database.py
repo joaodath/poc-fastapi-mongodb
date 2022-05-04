@@ -26,7 +26,7 @@ async def insert_one(data):
     Returns the data inserted
     """
     try:
-        result = await engine.insert_one(data)
+        result = await engine.save(data)
         return result
     except Exception as e:
         print(e)
