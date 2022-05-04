@@ -1,5 +1,5 @@
 from .database.models import GraphList
-from .database.database import find_all, find_one_by_id
+from .database.database import find_all, find_one_by_id, insert_one
 from typing import List
 from fastapi import FastAPI, HTTPException
 from dotenv import load_dotenv, find_dotenv
@@ -23,5 +23,13 @@ async def get_graph(graph_id: str):
         raise HTTPException(
             status_code=404, detail=f"Graph {graph_id} not found")
     return graphs
+
+@app.post("/graph", response_model=GraphList)  # create graph
+async def create_graph(graph: GraphList):
+    result = await insert_one(graph)
+    if result is None:
+        raise HTTPException(
+            status_code=500, detail="Error while creating graph")
+    return result
 
 # todo: request clarification about the last two endpoints
