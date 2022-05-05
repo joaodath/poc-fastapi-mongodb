@@ -19,8 +19,3 @@ class GraphList(Model):
 
     class Config:
         collection = "graph"
-
-
-if __name__ == "__main__":
-    GraphList
-    UpdateGraph
