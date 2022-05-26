@@ -1,5 +1,4 @@
 # Graph API usando FastAPI (POC)
-### Um desafio de programação da Milenio Capital
 
 ## Inicializando o projeto
 
